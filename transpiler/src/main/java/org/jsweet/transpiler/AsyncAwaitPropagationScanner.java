@@ -106,8 +106,7 @@ public class AsyncAwaitPropagationScanner extends AbstractTreeScanner {
                 }
                 Tree directParent = getParent();
                 if (!(context.isAwaitInvocation(invocation) || (directParent instanceof MethodInvocationTree
-                        && (Util.getElement(directParent).toString().equals("await")
-                                || Util.getElement((MethodInvocationTree) directParent).toString().endsWith(".await"))))) {
+                        && (directParent.toString().equals("await") || directParent.toString().endsWith(".await"))))) {
 
                     context.addAwaitInvocation(invocation);
                     stillWorking = true;
