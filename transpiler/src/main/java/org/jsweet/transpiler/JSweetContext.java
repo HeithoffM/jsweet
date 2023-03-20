@@ -57,6 +57,7 @@ import javax.lang.model.type.TypeMirror;
 import javax.lang.model.util.Elements;
 import javax.lang.model.util.Types;
 
+import com.sun.source.tree.LambdaExpressionTree;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -2091,6 +2092,23 @@ public class JSweetContext {
     public boolean isAwaitInvocation(MethodInvocationTree invocation) {
         if (this.awaitInvocations != null) {
             return this.awaitInvocations.contains(invocation);
+        } else {
+            return false;
+        }
+    }
+
+    private Set<LambdaExpressionTree> asyncLambdas;
+
+    public void addAsyncLambda(LambdaExpressionTree lambda) {
+        if (this.asyncLambdas == null) {
+            this.asyncLambdas = new HashSet<>();
+        }
+        this.asyncLambdas.add(lambda);
+    }
+
+    public boolean isAsyncLambda(LambdaExpressionTree lambda) {
+        if (this.asyncLambdas != null) {
+            return this.asyncLambdas.contains(lambda);
         } else {
             return false;
         }

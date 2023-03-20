@@ -25,6 +25,7 @@ import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.ExecutableType;
 
+import com.sun.source.tree.LambdaExpressionTree;
 import org.jsweet.JSweetConfig;
 import org.jsweet.transpiler.OverloadScanner.Overload;
 import org.jsweet.transpiler.OverloadScanner.OverloadMethodEntry;
@@ -98,6 +99,10 @@ public class AsyncAwaitPropagationScanner extends AbstractTreeScanner {
 
                         stillWorking = true;
                     }
+                }
+                LambdaExpressionTree lambdaParent = getParent(LambdaExpressionTree.class);
+                if (lambdaParent != null) {
+                    context.addAsyncLambda(lambdaParent);
                 }
                 Tree directParent = getParent();
                 if (!(context.isAwaitInvocation(invocation) || (directParent instanceof MethodInvocationTree

@@ -6325,6 +6325,9 @@ public class Java2TypeScriptTranslator extends AbstractTreePrinter {
             removeLastChar();
             print(") => {").println().startIndent().printIndent().print("return ");
         }
+        if (context.isAsyncLambda(lamba)) {
+            print("async ");
+        }
         getScope().skipTypeAnnotations = true;
         if (regularFunction) {
             print("function(").printArgList(null, lamba.getParameters()).print(") ");
